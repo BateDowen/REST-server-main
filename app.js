@@ -8,26 +8,28 @@ const app = express();
 
 const fileStorage = multer.diskStorage({
     destination: (req,file, cb) => {
-        cb(null, 'images');
+        
+        cb(null, 'images/');
     },
     filename: (req,file,cb) =>{
-        cb(null, new Date().toISOString() + '-' + file.originalname )
+        cb(null,  file.originalname )
     }
 });
 const fileFilter = (req,file,cb) => {
     if (
-    file.mimetype === 'image/png' || 
-    file.mimetype === 'image/jpg' || 
-    file.mimetype === 'image/jpeg'
-    ) {
-        cb(null,true)
+        file.mimetype === 'image/png' || 
+        file.mimetype === 'image/jpg' || 
+        file.mimetype === 'image/jpeg'
+        ) {
+            cb(null,true)
+           
     }else {
         cb(null,false)
     }
 }
 app.use(express.json());
 app.use(multer({ storage: fileStorage, fileFilter: fileFilter}).single('image'))
-app.use('images',express.static(path.join(__dirname,'images')));
+app.use('/images',express.static(path.join(__dirname,'images')));
 app.use((req,res,next) => {
     res.setHeader('Access-Control-Allow-Origin','*');
     res.setHeader('Access-Control-Allow-Methods','GET, POST, PUT, DELETE');
@@ -45,7 +47,7 @@ app.use((error,req,res,next) => {
     
 });
 
-const port = 3000;
+const port = 8080;
 mongoose.connect('mongodb://127.0.0.1/max')
     .then(
         app.listen(port, console.log(`Server is listening on ${port}`))

@@ -12,7 +12,7 @@ exports.getPosts = (req,res,next) => {
         if (!err.statusCode) {
             err.statusCode = 500;
         }
-        next();
+        next(err);
 
     });
    
@@ -31,6 +31,7 @@ exports.createPosts = (req,res,next) => {
         
     }
     if (!req.file) {
+        
         const error = new Error('No image provided');
         error.statusCode = 422;
         throw error;
