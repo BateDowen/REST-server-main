@@ -1,5 +1,4 @@
 
-
 const router = require('express').Router();
 const feedController = require('../controllers/feed.js');
 const { body } = require('express-validator');
@@ -13,6 +12,8 @@ router.post('/post',[
 ], feedController.createPosts);
 
 router.get('/post/:postId',feedController.getPost);
+
+router.delete('/post/:postId', feedController.deletePost);
 
 router.put('/post/:postId',[
     body('title').trim().isLength({min:5}),
