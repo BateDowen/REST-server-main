@@ -2,9 +2,10 @@
 const router = require('express').Router();
 const feedController = require('../controllers/feed.js');
 const { body } = require('express-validator');
+const isAuth = require('../middlewares/is-auth.js');
 
 
-router.get('/posts',feedController.getPosts);
+router.get('/posts',isAuth,feedController.getPosts);
 
 router.post('/post',[
     body('title').trim().isLength({min:5}),
