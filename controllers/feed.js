@@ -214,6 +214,30 @@ exports.getUserStatus = (req,res,next) => {
         }
         next(err);
     })
+};
+
+exports.updateUserStatus = (req,res,next) => {
+    const userStatus = req.body.status;
+    User.findById(req.userId)
+    .then(user =>{
+        if (!user) {
+            const err = new Error('Could not find user');
+            err.ststusCode = 404;
+            throw err
+        }
+        user.status = userStatus;
+        return user.save()
+    })
+    .then( result =>{
+        res.status(200).json({message: 'Updated status'})
+
+    })
+    .catch(err => {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    })
 }
 
  const clearImage = filePath =>{

@@ -23,6 +23,8 @@ router.put('/post/:postId',isAuth,[
 
 router.get('/status',isAuth,feedController.getUserStatus);
 
+router.put('/status',isAuth,feedController.updateUserStatus);
+
 
 module.exports = router;
 
