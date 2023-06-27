@@ -21,6 +21,9 @@ router.put('/post/:postId',isAuth,[
     body('content').trim().isLength({min:5})
 ], feedController.updatePost);
 
+router.get('/status',isAuth,feedController.getUserStatus);
+
+
 module.exports = router;
 
 

@@ -198,6 +198,24 @@ exports.deletePost = (req,res,next) => {
 
 }
 
+exports.getUserStatus = (req,res,next) => {
+    User.findById(req.userId)
+    .then(user =>{
+        if (!user) {
+            const err = new Error('Could not find user');
+            err.ststusCode = 404;
+            throw err
+        }
+        res.status(200).json({status: user.status})
+    })
+    .catch(err => {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    })
+}
+
  const clearImage = filePath =>{
     filePath = path.join(__dirname,'../', filePath);
     fs.unlink(filePath, err => console.log(err));
